@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAD E-commerce Web | Front End Coding Task</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat|Inconsolata" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body ng-app="mad_app">
+<div ng-controller="mainController">
+	<div class="row top-navbar">
+		<div class="title"><span>MAD E-commerce</span></div>
+		<div class="navbar-right">
+			<ul class="nav-ul">
+			<li class="show-cat"><a href="#"><i class="material-icons">&#xE152;</i> Filter</a>
+				<ul class="drop-down-cat">
+					<li ng-repeat="category in category_list">
+					<label for="{{category}}">
+					<input type="checkbox" ng-model="filter[category]" id="{{category}}">{{ category }}</label>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#"><i class="material-icons">&#xE8CC;</i> Cart</a></li>
+			<!-- <li><a href="#"><i class="material-icons">&#xE8A6;</i> Sign In</a></li> -->
+			</ul>
+		</div>
+	</div>
+
+	<div ng-show="loadingText" class="loading">loading...</div>
+
+	<div class="row" ng-show="shopList">
+		<div class="col-1"></div>
+		<div class="col-2 sort_by">
+			<ul>
+				<li><a ng-click="sortType = 'price'; sortReverse = !sortReverse;price_arrow =! price_arrow"><i class="material-icons">&#xE164;</i>  Price</a></li>
+				<li><a ng-click="sortType = 'score'; sortReverse = !sortReverse;score_arrow =! score_arrow"><i class="material-icons">&#xE164;</i>  Score </a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row" scroll>
+		<div class="col-1"></div>
+		<div class="col-4">
+			<div class="row">
+				<div class="col-2 prod-box" ng-repeat="prod in (shopping_list | filter:filterByCategory) | orderBy:sortType:sortReverse | limitTo:limit"">
+					<div class="prod-inner-div">
+						<a ng-href="{{prod.url}}" target="_blank">
+							<div class="thumbnail">
+							<img default="{{prod.img}}" src="loading_img.gif" on-error-src="not_load.gif"/>
+							<h5>{{prod.score | number:4}} score</h5>
+							</div>
+
+							<div class="caption">
+							<h4 class="prod-name">{{prod.name}}</h4>
+							<hr/>
+							<h5><i class="material-icons">&#xE227;</i> {{prod.price}}</h5>         
+							<h5><i class="material-icons">&#xE89A;</i> {{prod.cat}} </h5> 
+							</div>
+						</a>
+						<div class="row cart-box">
+							<div class="col-6">
+							<a href="#" class="add-to-cart"><i class="material-icons">&#xE854;</i> Add To Cart</a> 
+							</div>
+						</div> 
+					</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/angular.js"></script>
+<script src="js/mad_app.js"></script>
+</body>
+</html>
