@@ -17,11 +17,11 @@ $scope.filter = {};
 	$http.get('https://test-prod-api.herokuapp.com/products').success(function(data){
 		$scope.loadingText = true
 		$scope.shopping_list = data.products
-		angular.forEach(data.products,function(val){
-			if($scope.category_list.indexOf(val.cat) < 0){
-				$scope.category_list.push(val.cat)
+	 	for (var i = 0; i < data.products.length; i++) {
+            if($scope.category_list.indexOf(data.products[i]['cat']) < 0){
+				$scope.category_list.push(data.products[i]['cat'])
 			}
-		})
+        }
 		}).finally(function() {
 			$scope.loadingText = false
 			$scope.shopList = true
